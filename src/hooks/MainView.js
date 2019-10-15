@@ -1,12 +1,11 @@
-/* import React, { useEffect, useState } from 'react'; */
-/* import { useSelector } from 'react-redux'; */
+import React, { useContext } from 'react';
+import Context from '../utils/context';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 
-import React from 'react';
-
-
 function MainView(props) {
+
+  const context = useContext(Context);
 
 /*     const [loadedView, setLoadedView] = useState(false);
     const [loadedVehicle, setLoadedVehicle] = useState(false); */
@@ -28,13 +27,14 @@ function MainView(props) {
 /*    }, []); */
 
     const returnListItems = function returnListItems() {
+        console.log(context);
         return (
         <iframe 
         width="80%" 
         height="80%" 
-        src={"https://www.youtube.com/embed/hHW1oY26kxQ"} 
+        src={context.currentCamera ? context.currentCamera.camera_url : null} 
         // Twitch stream works as well
-    //        src="https://player.twitch.tv/?channel=riotgames"
+        //   src="https://player.twitch.tv/?channel=riotgames"
         frameborder="0" 
         allow="accelerometer; autoplay=1; encrypted-media; gyroscope; picture-in-picture" 
         allowFullScreen

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import Context from '../utils/context';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -6,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 
 function LeftView(props) {
+  const context = useContext(Context);
         // Can't get hotkeys to work.
         // They only work after button is pressed
 
@@ -17,33 +19,26 @@ function LeftView(props) {
             setCameras(props.cameraList)
         }); */
 
-/*         const returnListItems = function returnListItems() {
+        const returnListItems = function returnListItems() {
             let listItems = []
-            for(let i = 0; i < cameraState.length; i++) {
+            for(let i = 0; i < context.cameraList.length; i++) {
                     listItems.push(
-                    <ListItem button key={cameraState[i].id} onClick={() => dispatch({type: "INCREMENT", payload: cameraState[i]})}>
+                    <ListItem button key={context.cameraList[i].id} onClick={() => context.setCurrentCamera(context.cameraList[i])}>
                         <ListItemText
-                            primary={cameraState[i].name}
-                            secondary={cameraState[i].description}
+                            primary={context.cameraList[i].name}
+                            secondary={context.cameraList[i].description}
                         />
                     </ListItem>);
             }
             return listItems;
-        } */
+        }
 
         return(
             <div className="view">
                 <div className="borderStyle align rightBorder">
                     <h3>Camera picker</h3>
                     <List >
-{/*                         {returnListItems()} */}
-
-                        <ListItem button key={1} onClick={() => console.log("clicked")}>
-                            <ListItemText
-                                primary={"Main text"}
-                                secondary={"Second text"}
-                            />
-                        </ListItem>
+                        {returnListItems()}
                     </List>
                 </div>
                 <div className="align">

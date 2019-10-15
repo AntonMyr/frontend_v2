@@ -5,6 +5,7 @@ import * as ACTIONS from './store/actions/actions';
 import * as Reducer1 from './store/reducers/plain_reducer';
 import * as AuthReducer from './store/reducers/auth_reducer';
 import * as FormReducer from './store/reducers/form_reducer';
+import * as CameraReducer from './store/reducers/camera_reducers';
 import Routes from './routes';
 
 import Auth from './utils/auth';
@@ -57,6 +58,20 @@ const ContextState = () => {
     }
 
 
+    const [stateCameraReducer, dispatchCameraReducer] = useReducer(CameraReducer.CameraReducer, CameraReducer.initialState)
+
+    const handleGetCameras = (data) => {
+      dispatchCameraReducer(ACTIONS.fetch_cameras_success(data));
+    }
+
+    const setCurrentCamera = (camera) => {
+      dispatchCameraReducer(ACTIONS.set_current_camera(camera));
+    }
+
+    const handleGetCamerasFail = () => {
+      dispatchCameraReducer(ACTIONS.fetch_cameras_failure());
+    }
+
 
     /*
       Form Reducer
@@ -83,6 +98,7 @@ const ContextState = () => {
 
 
 
+
     return(
       <div>
       <Context.Provider
@@ -106,6 +122,12 @@ const ContextState = () => {
             handleUserLogout: () => handleLogout(),
             handleUserAddProfile: (profile) => handleAddProfile(profile),
             handleUserRemoveProfile: () => handleRemoveProfile(),
+
+            //Camera reducer
+            cameraList: stateCameraReducer.cameraList,
+            currentCamera: stateCameraReducer.currentCamera,
+            fetchCameras: (data) => handleGetCameras(data),
+            setCurrentCamera: (camera) => setCurrentCamera(camera),
 
             //Handle auth
             handleAuth: (props) => handleAuthentication(props),

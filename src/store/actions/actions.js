@@ -62,3 +62,24 @@ export const user_input_submit = (text) => {
     payload: text
   }
 }
+
+export const fetch_cameras_success = (cameras) => {
+  return {
+    type: ACTION_TYPES.FETCH_CAMERAS_SUCCESS,
+    payload: cameras
+  }
+}
+
+export const fetch_cameras_failure = () => {
+  return {
+    type: ACTION_TYPES.FETCH_CAMERAS_failure
+  }
+}
+
+export const set_current_camera = (currentCamera) => {
+  console.log("CURRENT: ", currentCamera);
+  return {
+    type : ACTION_TYPES.SET_CURRENT_CAMERA,
+    payload: currentCamera
+  }
+}
