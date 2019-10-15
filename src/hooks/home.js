@@ -17,6 +17,12 @@ const Home = props => {
       context.fetchCameras(res.data);
       context.setCurrentCamera(res.data[0]);
     })
+
+    axios.get(`http://localhost:5000/vehicles`).then((res) => {
+      console.log(res.data);
+      context.fetchVehicles(res.data);
+      context.setCurrentVehicle(res.data[0]);
+    })
   }, [])
 
   return(

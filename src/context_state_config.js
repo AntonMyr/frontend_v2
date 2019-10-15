@@ -6,6 +6,7 @@ import * as Reducer1 from './store/reducers/plain_reducer';
 import * as AuthReducer from './store/reducers/auth_reducer';
 import * as FormReducer from './store/reducers/form_reducer';
 import * as CameraReducer from './store/reducers/camera_reducers';
+import * as VehicleReducer from './store/reducers/vehicle_reducers';
 import Routes from './routes';
 
 import Auth from './utils/auth';
@@ -58,6 +59,8 @@ const ContextState = () => {
     }
 
 
+
+    // Camera reducer
     const [stateCameraReducer, dispatchCameraReducer] = useReducer(CameraReducer.CameraReducer, CameraReducer.initialState)
 
     const handleGetCameras = (data) => {
@@ -72,6 +75,16 @@ const ContextState = () => {
       dispatchCameraReducer(ACTIONS.fetch_cameras_failure());
     }
 
+    //Vehicle reducer
+    const [stateVehicleReducer, dispatchVehicleReducer] = useReducer(VehicleReducer.VehicleReducer, VehicleReducer.initialState)
+
+    const getVehicles = (data) => {
+      dispatchVehicleReducer(ACTIONS.fetch_vehicles_success(data));
+    }
+
+    const setCurrentVehicle = (vehicle) => {
+      dispatchVehicleReducer(ACTIONS.set_current_vehicle(vehicle));
+    }
 
     /*
       Form Reducer
@@ -128,6 +141,12 @@ const ContextState = () => {
             currentCamera: stateCameraReducer.currentCamera,
             fetchCameras: (data) => handleGetCameras(data),
             setCurrentCamera: (camera) => setCurrentCamera(camera),
+
+            //Vehicle reducer
+            vehicleList: stateVehicleReducer.vehicleList,
+            currentVehicle: stateVehicleReducer.currentVehicle,
+            fetchVehicles: (data) => getVehicles(data),
+            setCurrentVehicle: (vehicle) => setCurrentVehicle(vehicle),
 
             //Handle auth
             handleAuth: (props) => handleAuthentication(props),

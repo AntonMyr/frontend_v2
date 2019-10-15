@@ -42,16 +42,15 @@ function MainView(props) {
         );
     }
 
-/*     const returnButtonItems = function returnButtonItems() {
+    const returnButtonItems = function returnButtonItems() {
         let buttonList = []
-        console.log("Current: ", vehicles);
         buttonList.push(
             <Button
-                key={vehicles.currentVehicle.vehicle_id}
-            >Real</Button>
+                key={context.currentVehicle ? context.currentVehicle.vehicle_id : null}
+            >{context.currentVehicle ? context.currentVehicle.name : null}</Button>
         );
         return buttonList;
-    } */
+    }
 
 
 /*     if(!loading) { */
@@ -62,14 +61,14 @@ function MainView(props) {
                     { returnListItems() }
                 </div>
                 <div>
-                    <p>Currently controlling: Vehicle 1</p>
+                    <p>Currently controlling: {context.currentVehicle ? context.currentVehicle.name : null}</p>
                     <ButtonGroup
                         variant="text"
                         color="secondary"
                         size="large"
                         aria-label="large contained secondary button group"
                     >
-{/*                     {returnButtonItems()} */}
+                    {returnButtonItems()}
                         <Button>Stop</Button>
                         <Button>Reset</Button>
                         <Button>Turn off</Button>

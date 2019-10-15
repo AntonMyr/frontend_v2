@@ -77,9 +77,22 @@ export const fetch_cameras_failure = () => {
 }
 
 export const set_current_camera = (currentCamera) => {
-  console.log("CURRENT: ", currentCamera);
   return {
     type : ACTION_TYPES.SET_CURRENT_CAMERA,
     payload: currentCamera
+  }
+}
+
+export const fetch_vehicles_success = (vehicles) => {
+  return {
+    type: ACTION_TYPES.FETCH_VEHICLES_SUCCESS,
+    payload: vehicles
+  }
+}
+
+export const set_current_vehicle = (vehicle) => {
+  return {
+    type : ACTION_TYPES.SET_CURRENT_VEHICLE,
+    payload: vehicle
   }
 }
