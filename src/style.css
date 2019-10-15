@@ -1,0 +1,36 @@
+.home {
+  display: grid;
+  grid-template-columns: 23% auto 23%;
+  height: 100vh;
+  font-family: roboto;
+}
+
+.align {
+  text-align: center;
+  margin: 1vw 1vh;
+}
+
+.rightBorder {
+  border-right: 1px solid black;
+}
+
+.leftView {
+  text-align: center;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: span 2;
+}
+
+.leftViewBottom {
+  text-align: center;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: span 2;
+}
+
+.view {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 25%;
+}
