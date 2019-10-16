@@ -19,6 +19,7 @@ export default class Auth {
 
   handleAuth = () => {
     this.auth0.parseHash((err, authResult) => {
+      console.log("BEING run");
       if(authResult) {
         localStorage.setItem('access_token', authResult.accessToken)
         localStorage.setItem('id_token', authResult.idToken)
@@ -27,6 +28,7 @@ export default class Auth {
         localStorage.setItem('expiresAt', expiresAt)
 
         this.getProfile();
+        console.log("USER: ", this.userProfile);
         setTimeout(() => { history.replace('/authcheck') }, 600);
       } else {
         console.log(err)
@@ -46,6 +48,7 @@ export default class Auth {
 
   getProfile = () => {
     let accessToken = this.getAccessToken()
+    console.log("WHY isn't this logging?");
     if(accessToken) {
       this.auth0.client.userInfo(accessToken, (err, profile) => {
           if(profile) {

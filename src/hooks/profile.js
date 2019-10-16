@@ -5,6 +5,7 @@ import Context from '../utils/context';
 const Profile = () => {
   const context = useContext(Context)
 
+  console.log(context);
 
   const RenderProfile = (props) => {
     return(

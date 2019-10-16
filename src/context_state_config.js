@@ -7,6 +7,7 @@ import * as AuthReducer from './store/reducers/auth_reducer';
 import * as FormReducer from './store/reducers/form_reducer';
 import * as CameraReducer from './store/reducers/camera_reducers';
 import * as VehicleReducer from './store/reducers/vehicle_reducers';
+import * as NotificationReducer from './store/reducers/notification_reducers';
 import Routes from './routes';
 
 import Auth from './utils/auth';
@@ -109,6 +110,12 @@ const ContextState = () => {
       }
     }
 
+    // Notifications
+    const [stateNotificationReducer, dispatchNotificationReducer] = useReducer(NotificationReducer.NotificationReducer, NotificationReducer.initialState)
+    const fetchPhoneNumbers = (numbers) => {
+      dispatchNotificationReducer(ACTIONS.fetch_phone_numbers(numbers));
+    }
+
 
 
 
@@ -147,6 +154,10 @@ const ContextState = () => {
             currentVehicle: stateVehicleReducer.currentVehicle,
             fetchVehicles: (data) => getVehicles(data),
             setCurrentVehicle: (vehicle) => setCurrentVehicle(vehicle),
+
+            //Notification
+            phone_numbers: stateNotificationReducer.phone_numbers,
+            setPhoneNumbers: (numbers) => fetchPhoneNumbers(numbers),
 
             //Handle auth
             handleAuth: (props) => handleAuthentication(props),

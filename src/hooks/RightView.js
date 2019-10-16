@@ -22,7 +22,7 @@ function RightView(props) {
             </div>
             <div className="align">
                 <ButtonGroup
-                    variant="text"
+                    variant="contained"
                     size="large"
                     aria-label="large contained secondary button group"
                 >

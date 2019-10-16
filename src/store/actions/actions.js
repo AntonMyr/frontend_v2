@@ -96,3 +96,10 @@ export const set_current_vehicle = (vehicle) => {
     payload: vehicle
   }
 }
+
+export const fetch_phone_numbers = (phone_numbers) => {
+  return {
+    type: ACTION_TYPES.FETCH_PHONE_NUMBERS,
+    payload: phone_numbers
+  }
+}

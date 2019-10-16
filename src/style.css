@@ -1,13 +1,30 @@
 .home {
   display: grid;
   grid-template-columns: 23% auto 23%;
-  height: 100vh;
+  height:94vh;
   font-family: roboto;
 }
 
+.mainDiv {
+  height: 100%;
+  text-align: center;
+}
+
+body {
+  margin: 0 !important;
+}
+
+.header {
+  height: 5vh;
+  flexGrow: 1;
+  textAlign: 'center';
+}
+
+.title {
+  margin-top: 5px;
+}
 .align {
   text-align: center;
-  margin: 1vw 1vh;
 }
 
 .rightBorder {
@@ -30,7 +47,8 @@
 }
 
 .view {
-  height: 100vh;
+  height: 100%;
   display: grid;
   grid-template-rows: auto 25%;
+  margin: 1vw 1vh;
 }

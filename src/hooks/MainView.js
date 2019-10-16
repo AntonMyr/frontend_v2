@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import Context from '../utils/context';
+import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 
@@ -55,15 +56,15 @@ function MainView(props) {
 
 /*     if(!loading) { */
         return(
-            <div className="view">
+            <div className="view align">
                 <div className="borderStyle align rightBorder">
                     <h3>Current view: Camera 1</h3>
                     { returnListItems() }
                 </div>
                 <div>
-                    <p>Currently controlling: {context.currentVehicle ? context.currentVehicle.name : null}</p>
+                    <Typography variant="subtitle1">Currently controlling: {context.currentVehicle ? context.currentVehicle.name : null}</Typography>
                     <ButtonGroup
-                        variant="text"
+                        variant="contained"
                         color="secondary"
                         size="large"
                         aria-label="large contained secondary button group"

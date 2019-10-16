@@ -11,13 +11,14 @@ import Callback from './hooks/callback';
 import HooksForm from './hooks/hooks_form1';
 import PrivateComponent from './hooks/privatecomponent';
 import Profile from './hooks/profile';
+import Notifications from './hooks/Notifications';
 
 
 
 const PrivateRoute = ({component: Component, auth }) => (
   <Route render={props => auth === true
     ? <Component auth={auth} {...props} />
-    : <Redirect to={{pathname:'/'}} />
+    : <Redirect to={{pathname:'/login'}} />
   }
   />
 )
@@ -28,30 +29,32 @@ const Routes = () => {
     const context = useContext(Context)
 
 
+    // Make so path / is either home screen or login screen
+    // Might have to add auth0 lock instead somehow
       return(
-        <div>
+        <div className="mainDiv">
           <Router history={history} >
           <Header />
-          <br />
-          <br />
           <div>
             <Switch>
-              <Route exact path='/' component={Home} />
+              <PrivateRoute exact auth={context.authState} path='/' component={Home} />
+              <Route path='/login' render={(props) => {
+                context.authObj.login(); 
+              }} />
               <Route path='/hooksform' component={HooksForm} />
               <Route path='/profile' component={Profile} />
               <Route path='/hookscontainer' component={HooksContainer1} />
               <Route path='/authcheck' component={AuthCheck} />
-
+              <Route path='/notifications' component={Notifications} />
               <PrivateRoute path='/privateroute'
                             auth={context.authState}
                             component={PrivateComponent} />
               <PrivateRoute path="/profile"
                             auth={context.authState}
                             component={Profile} />
-              <Route path='/callback'
-					 render={(props) => {
-                         context.handleAuth(props);                                                            return <Callback />}} />
-
+              <Route path='/callback' render={(props) => {
+                context.handleAuth(props); return <Home />
+                }}/>
 
             </Switch>
           </div>
