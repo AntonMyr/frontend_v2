@@ -10,6 +10,7 @@ import RightView from './RightView'
 const Home = props => {
   const context = useContext(Context);
 
+  axios.defaults.headers.common['Authorization'] = `Bearer ${context.authObj.getAccessToken()}`;
 
   useEffect(() => {
     axios.get(`http://localhost:5000/camera`).then((res) => {
