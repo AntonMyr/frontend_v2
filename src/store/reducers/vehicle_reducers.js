@@ -8,7 +8,7 @@ export const initialState = {
 
 export const VehicleReducer = (state = initialState, action) => {
     switch(action.type) {
-      case ACTION_TYPES.FETCH_VECHILES_SUCCESS:
+      case ACTION_TYPES.FETCH_VEHICLES_SUCCESS:
         return {
           ...state,
           vehicleList: action.payload 
