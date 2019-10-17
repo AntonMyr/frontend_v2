@@ -8,6 +8,11 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Toolbar from '@material-ui/core/Toolbar';
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Checkbox from '@material-ui/core/Checkbox';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
@@ -30,6 +35,9 @@ const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
+  title: {
+    flex: '1 1 100%',
+  },
 });
 
 function createData(name, calories, fat, carbs, protein) {
@@ -44,12 +52,52 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
+const useToolbarStyles = makeStyles(theme => ({
+  title: {
+    flex: '1 1 100%',
+  },
+}));
+
+const EnhancedTableToolbar = props => {
+  const classes = useToolbarStyles();
+  const { numSelected } = props;
+  console.log(props);
+
+  return (
+    <Toolbar
+      //className={clsx(classes.root, {
+      //  [classes.highlight]: numSelected > 0,
+     // })}
+    >
+      {numSelected > 0 ? (
+        <Typography className={classes.title} color="inherit" variant="subtitle1">
+          {numSelected} selected
+        </Typography>
+      ) : (
+        <Typography className={classes.title} variant="h6" id="tableTitle">
+          Notification numbers list
+        </Typography>
+      )}
+
+      {numSelected > 0 ? (
+        <Tooltip title="Delete">
+          <IconButton onClick={props.handleDelete} aria-label="delete">
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+      ) : null}
+    </Toolbar>
+  );
+};
+
 function Notifications(props) {
     const context = useContext(Context);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${context.authObj.getAccessToken()}`;
 
     const [open, setOpen] = React.useState(false);
     const [inputValue, setInputValue] = React.useState(0);
     const [updateValue, setUpdateValue] = React.useState(0);
+    const [selected, setSelected] = React.useState([]);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -73,8 +121,29 @@ function Notifications(props) {
         setOpen(false);
     }
 
+    const handleDelete = () => {
+        console.log("handleDelete");
+        axios.post(`http://localhost:5000/notifications/remove`, {deleteList: selected}).then((res) => {
+            context.setPhoneNumbers([]);
+            console.log("update value: ", updateValue);
+            setUpdateValue(updateValue+1);
+            console.log(updateValue)
+            setSelected([]);
+        });
+    }
+
+
+    const handleSendEvent = () => {
+        axios.post(`http://localhost:5000/notifications/event`).then((res) => {
+            console.log(res);
+        });
+    }
+
     useEffect(() => {
-        axios.get(`http://localhost:5000/notifications`).then((res) => {
+        console.log("This is being run", updateValue);
+        console.log("AccessToken: ", context.authObj.getAccessToken());
+        axios.get(`http://localhost:5000/notifications`, {},{headers: {authorization: `Bearer ${context.authObj.getAccessToken()}`}}).then((res) => {
+
         console.log(res.data);
         context.setPhoneNumbers(res.data);
         })
@@ -82,40 +151,113 @@ function Notifications(props) {
 
     const classes = useStyles();
 
+    const handleSelectAllClick = event => {
+        if (event.target.checked) {
+        const newSelecteds = context.phone_numbers.map(n => n.receiptant_id);
+        setSelected(newSelecteds);
+        return;
+        }
+        setSelected([]);
+    };
+
+    const handleClick = (event, name) => {
+        const selectedIndex = selected.indexOf(name);
+        let newSelected = [];
+
+        if (selectedIndex === -1) {
+        newSelected = newSelected.concat(selected, name);
+        } else if (selectedIndex === 0) {
+        newSelected = newSelected.concat(selected.slice(1));
+        } else if (selectedIndex === selected.length - 1) {
+        newSelected = newSelected.concat(selected.slice(0, -1));
+        } else if (selectedIndex > 0) {
+        newSelected = newSelected.concat(
+            selected.slice(0, selectedIndex),
+            selected.slice(selectedIndex + 1),
+        );
+        }
+
+        setSelected(newSelected);
+    };
+
+    const isSelected = id => selected.indexOf(id) !== -1;
+
     return (
         <div className="align">
             <Paper className={classes.root}>
+{/*             <EnhancedTableToolbar numSelected={selected.length} selected={selected} handleDelete={handleDelete}/> */}
+
+            <Toolbar
+            //className={clsx(classes.root, {
+            //  [classes.highlight]: numSelected > 0,
+            // })}
+            >
+            {selected.length > 0 ? (
+                <Typography className={classes.title} color="inherit" variant="subtitle1">
+                {selected.length} selected
+                </Typography>
+            ) : (
+                <Typography className={classes.title} variant="h6" id="tableTitle">
+                Notification numbers list
+                </Typography>
+            )}
+
+            {selected.length > 0 ? (
+                <Tooltip title="Delete">
+                <IconButton onClick={handleDelete} aria-label="delete">
+                    <DeleteIcon />
+                </IconButton>
+                </Tooltip>
+            ) : null}
+            </Toolbar>
             <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                 <TableRow>
                     <TableCell padding="checkbox">
+                        <Checkbox
+                        indeterminate={selected.length > 0 && selected.length < context.phone_numbers.length}
+                        checked={selected.length === context.phone_numbers.length}
+                        onChange={handleSelectAllClick}
+                        inputProps={{ 'aria-label': 'select all desserts' }}
+                    />
+                    </TableCell>
+{/*                     <TableCell padding="checkbox">
                     <Checkbox
 //                        indeterminate={numSelected > 0 && numSelected < rowCount}
  //                       checked={numSelected === rowCount}
   //                      onChange={onSelectAllClick}
                         inputProps={{ 'aria-label': 'select all desserts' }}
                     />
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell>Receiptant id</TableCell>
                     <TableCell align="right">Phone number</TableCell>
                 </TableRow>
                 </TableHead>
                 <TableBody>
-                {context.phone_numbers.map(row => (
-                    <TableRow role="checkbox" key={row.receiptant_id}>
+                {context.phone_numbers.map(row => {
 
-                    <TableCell padding="checkbox">
-                    <Checkbox
-                    //checked={isItemSelected}
-                    inputProps={{ 'aria-labelledby': row.receiptant_id }}
-                    />
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                        {row.receiptant_id}
-                    </TableCell>
-                    <TableCell align="right">{row.phone_number}</TableCell>
-                    </TableRow>
-                ))}
+                    const isItemSelected = isSelected(row.receiptant_id);
+                    return(
+                        <TableRow role="checkbox" 
+                        key={row.receiptant_id} 
+                        onClick={event => handleClick(event, row.receiptant_id)}
+                        selected={isItemSelected}
+                        >
+
+                        <TableCell padding="checkbox">
+                        <Checkbox
+                        checked={isItemSelected}
+                        inputProps={{ 'aria-labelledby': row.receiptant_id }}
+                        />
+                        </TableCell>
+                        <TableCell component="th" scope="row">
+                            {row.receiptant_id}
+                        </TableCell>
+                        <TableCell align="right">{row.phone_number}</TableCell>
+                        </TableRow>
+                    )
+                }
+                )}
                 </TableBody>
             </Table>
             </Paper>
@@ -126,7 +268,7 @@ function Notifications(props) {
                 className="view"
             >
                 <Button onClick={handleClickOpen}>Add phone number</Button>
-                <Button>Send fake event notification</Button>
+                <Button onClick={handleSendEvent}>Send fake event notification</Button>
             </ButtonGroup>
 
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
