@@ -21,27 +21,27 @@ function AddForm(props) {
                 required
                 margin="dense"
                 id="phone_number"
-                label={props.field1}
+                label={props.field1.name}
                 type="text"
-                onChange={props.handleInput}
+                onChange={props.field1.handleInput}
                 fullWidth
             />
             <TextField
                 required
                 margin="dense"
                 id="phone_number"
-                label={props.field2}
+                label={props.field2.name}
                 type="text"
-                onChange={props.handleInput}
+                onChange={props.field2.handleInput}
                 fullWidth
             />
             <TextField
                 required
                 margin="dense"
                 id="phone_number"
-                label={props.field3}
+                label={props.field3.name}
                 type="text"
-                onChange={props.handleInput}
+                onChange={props.field3.handleInput}
                 fullWidth
             />
             </DialogContent>
@@ -49,7 +49,7 @@ function AddForm(props) {
             <Button onClick={props.handleClose} color="primary">
                 Cancel
             </Button>
-            <Button onClick={props.handleClose} color="primary">
+            <Button onClick={props.handleSubmit} color="primary">
                 Add
             </Button>
             </DialogActions>
