@@ -4,8 +4,8 @@ import history from './history';
 
 export default class Auth {
   auth0 = new auth0.WebAuth({
-    domain: 'antonauth.eu.auth0.com',
-    clientID: '0khL1oi8aV7BHJ7xLxh3lnkcZatoiw9D',
+    domain: 'godseye.eu.auth0.com',
+    clientID: 'UMCRGZLvdVhv0qLpjESzKstydjPdofIZ',
     redirectUri: 'http://localhost:3000/callback',
     responseType: 'token id_token',
     audience: "http://localhost:5000/",
