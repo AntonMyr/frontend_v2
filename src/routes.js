@@ -6,11 +6,7 @@ import AuthCheck from './utils/authcheck';
 
 import Home from './hooks/home';
 import Header from './hooks/header';
-import HooksContainer1 from './hooks/hook1';
 import Callback from './hooks/callback';
-import HooksForm from './hooks/hooks_form1';
-import PrivateComponent from './hooks/privatecomponent';
-import Profile from './hooks/profile';
 import Notifications from './hooks/Notifications';
 
 
@@ -43,7 +39,7 @@ const Routes = () => {
               }} />
               
               <Route path='/authcheck' component={AuthCheck} />
-              <Route path='/notifications' component={Notifications} />
+              <PrivateRoute exat auth={context.authState} path='/notifications' component={Notifications} />
              
               <Route path='/callback' render={(props) => {
                 context.handleAuth(props); return <Home />
