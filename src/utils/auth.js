@@ -4,11 +4,11 @@ import history from './history';
 
 export default class Auth {
   auth0 = new auth0.WebAuth({
-    domain: 'godseye.eu.auth0.com',
-    clientID: 'UMCRGZLvdVhv0qLpjESzKstydjPdofIZ',
-    redirectUri: 'http://localhost:3000/callback',
+    domain: process.env.REACT_APP_DOMAIN,
+    clientID: process.env.REACT_APP_CLIENT_ID,
+    redirectUri: process.env.REACT_APP_REDIRECT_URI,
     responseType: 'token id_token',
-    audience: "http://localhost:5000/",
+    audience: process.env.REACT_APP_AUDIENCE,
     scope: 'openid profile email'
   })
 

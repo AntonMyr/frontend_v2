@@ -103,58 +103,25 @@ function RemoveDialog(props) {
     const [cameraList, setCameraList] = React.useState(context.cameraList);
     const [deleteList, setDeleteList] = React.useState([]);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
     const handleInput = (event) => {
         setInputValue(event.target.value);
         console.log(inputValue);
     }
 
-    const handleNumberSubmit = () => {
-        console.log("Submitted number: ", inputValue);
-        axios.post(`http://localhost:5000/notifications`, {phone_number: inputValue}).then((res) => {
-            console.log(res.data);
-            setUpdateValue(updateValue+1);
-        });
-        setOpen(false);
-    }
-
     const handleDelete = () => {
-        let tempDeleteList = cameraList;
-        for(let i = 0; i < tempDeleteList.length; i++) {
-          for(let j = 0; j < selected.length; j++) {
-            if(tempDeleteList[i].camera_id == selected[j]) {
-              let removedItem = tempDeleteList.splice(i, 1);
-              setDeleteList([...deleteList, removedItem[0]]);
-            }
+      let tempDeleteList = cameraList;
+      tempDeleteList = tempDeleteList.filter(element => {
+          console.log(element);
+          if(!(selected.includes(element.camera_id))) {
+            console.log("Returned:", element);
+            return element;
           }
-        }
+        });
+        console.log("after: ", tempDeleteList);
+        setDeleteList(selected);
         setCameraList(tempDeleteList);
         setSelected([]);
     }
-
-
-    const handleSendEvent = () => {
-        axios.post(`http://localhost:5000/notifications/event`).then((res) => {
-            console.log(res);
-        });
-    }
-
-    useEffect(() => {
-        console.log("This is being run", updateValue);
-        console.log("AccessToken: ", context.authObj.getAccessToken());
-        axios.get(`http://localhost:5000/notifications`, {},{headers: {authorization: `Bearer ${context.authObj.getAccessToken()}`}}).then((res) => {
-
-        console.log(res.data);
-        context.setPhoneNumbers(res.data);
-        })
-    }, [updateValue])
 
     const classes = useStyles();
 
@@ -189,8 +156,11 @@ function RemoveDialog(props) {
 
     const isSelected = id => selected.indexOf(id) !== -1;
 
+    useEffect(() => {
+      setCameraList(context.cameraList);
+    }, [props.open]);
     return (
-            <Dialog fullWidth={true} open={props.open} onClose={handleClose} aria-labelledby="form-dialog-title">
+            <Dialog fullWidth={true} open={props.open} onClose={props.handleClose} aria-labelledby="form-dialog-title">
               <DialogContent >
 {/*             <EnhancedTableToolbar numSelected={selected.length} selected={selected} handleDelete={handleDelete}/> */}
 

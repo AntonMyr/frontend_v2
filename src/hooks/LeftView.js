@@ -85,7 +85,11 @@ function LeftView(props) {
     }
 
     const finalDelete = (deleteList) => {
+        deleteList = deleteList.map(element => {
+            return {camera_id: element}
+        });
         console.log("DeleteList: ", deleteList);
+
         axios.post(`http://localhost:5000/camera/remove`, {deleteList}).then((res) => {
             console.log(res.data);
             setUpdateValue(updateValue+1);
