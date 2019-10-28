@@ -33,18 +33,7 @@ function LeftView(props) {
     const [settingsOpen, setSettingsOpen] = React.useState(false);
     const [inputValue, setInputValue] = React.useState({name: "", url: "", description: ""});
     const [updateValue, setUpdateValue] = React.useState(0);
-        // Can't get hotkeys to work.
-        // They only work after button is pressed
-
-/*         const [cameraState, setCameras] = useState([]);
-
-        const dispatch = useDispatch() ; */
-
-/*         useEffect(() => {
-            setCameras(props.cameraList)
-        }); */
-
-
+    
     const handleClickOpen = () => {
         console.log('click');
         setOpen(true);

@@ -41,17 +41,10 @@ const Routes = () => {
               <Route path='/login' render={(props) => {
                 context.authObj.login(); 
               }} />
-              <Route path='/hooksform' component={HooksForm} />
-              <Route path='/profile' component={Profile} />
-              <Route path='/hookscontainer' component={HooksContainer1} />
+              
               <Route path='/authcheck' component={AuthCheck} />
               <Route path='/notifications' component={Notifications} />
-              <PrivateRoute path='/privateroute'
-                            auth={context.authState}
-                            component={PrivateComponent} />
-              <PrivateRoute path="/profile"
-                            auth={context.authState}
-                            component={Profile} />
+             
               <Route path='/callback' render={(props) => {
                 context.handleAuth(props); return <Home />
                 }}/>
