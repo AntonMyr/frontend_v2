@@ -126,20 +126,16 @@ function RemoveDialog(props) {
     }
 
     const handleDelete = () => {
-        console.log("handleDelete");
         let tempDeleteList = cameraList;
-        console.log("Selected= ", selected);
-        for(let i = 0; i < cameraList.length; i++) {
+        for(let i = 0; i < tempDeleteList.length; i++) {
           for(let j = 0; j < selected.length; j++) {
-            if(cameraList[i].camera_id == selected[j]) {
-              tempDeleteList.splice(i, 1);
-              setDeleteList(oldArray => [...oldArray, cameraList[i]]);
+            if(tempDeleteList[i].camera_id == selected[j]) {
+              let removedItem = tempDeleteList.splice(i, 1);
+              setDeleteList([...deleteList, removedItem[0]]);
             }
           }
         }
         setCameraList(tempDeleteList);
-        console.log("Final", deleteList);
-        console.log(tempDeleteList);
         setSelected([]);
     }
 
@@ -279,7 +275,7 @@ function RemoveDialog(props) {
             <Button onClick={props.handleClose} color="primary">
                 Cancel
             </Button>
-            <Button onClick={props.handleCameraSubmit} color="primary">
+            <Button onClick={() => props.handleSubmit(deleteList)} color="primary">
                 Confirm changes
             </Button>
             </DialogActions>

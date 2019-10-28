@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import axios from 'axios';
 import Context from '../utils/context';
 import List from '@material-ui/core/List';
@@ -81,8 +81,25 @@ function LeftView(props) {
             console.log(res.data);
             setUpdateValue(updateValue+1);
         });
-        setOpen(false);
+        handleClose();
     }
+
+    const finalDelete = (deleteList) => {
+        console.log("DeleteList: ", deleteList);
+        axios.post(`http://localhost:5000/camera/remove`, {deleteList}).then((res) => {
+            console.log(res.data);
+            setUpdateValue(updateValue+1);
+        });
+        handleClose();
+    };
+
+    useEffect(() => {
+        axios.get(`http://localhost:5000/camera`).then((res) => {
+            console.log(res.data);
+            context.fetchCameras(res.data);
+            context.setCurrentCamera(res.data[0]);
+        })
+    }, [updateValue]);
 
         const returnListItems = function returnListItems() {
             let listItems = []
@@ -135,7 +152,7 @@ function LeftView(props) {
                     </ButtonGroup>
                 </div>
                 <AddForm open={open} type={"Camera"} handleClose={handleClose} handleSubmit={handleCameraSubmit} field1={{name: "Name", handleInput: handleInputName}} field2={{name: "URL", handleInput: handleInputUrl}} field3={{name: "Description", handleInput: handleInputDesc}} />
-                <RemoveDialog open={settingsOpen} handleClose={handleClose} dialogTitle={"Remove camera objects"} dialogContent={"Select which camera object you want to remove."}/>
+                <RemoveDialog open={settingsOpen} handleSubmit={finalDelete} handleClose={handleClose} dialogTitle={"Remove camera objects"} dialogContent={"Select which camera object you want to remove."}/>
             </div>
         );
 }
