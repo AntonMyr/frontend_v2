@@ -19,3 +19,7 @@ Your project should start a new chrome window.
 
 <a name="about"/>
 
+## About the project
+The Autonomous warehouse system will be a way for the customer (Waleed Abdeen) to monitor its autonomous vehicles. The vehicles are fully autonomous and will be observed with a camera feed. This camera feed will be accessible from the front office application, from where the customer can observe and interfere with the vehicles in case of important events such as a collision. 
+
+This Github repository is the frontend part of the frontoffice application.
