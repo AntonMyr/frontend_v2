@@ -39,7 +39,10 @@ const Routes = () => {
               <Route path='/login' render={(props) => {
                 context.authObj.login(); 
               }} />
-              
+              <Route path='/logout' component={() => { 
+                 window.location.href = `https://${process.env.REACT_APP_DOMAIN}/v2/logout`; 
+                 return null;
+              }}/>
               <Route path='/authcheck' component={AuthCheck} />
               <PrivateRoute exat auth={context.authState} path='/notifications' component={Notifications} />
              
