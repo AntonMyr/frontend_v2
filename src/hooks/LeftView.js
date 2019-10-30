@@ -108,6 +108,12 @@ function LeftView(props) {
             return listItems;
         }
 
+        const textFields = [
+            {name: "Name", handleInput: handleInputName},
+            {name: "URL", handleInput: handleInputUrl},
+            {name: "Description", handleInput: handleInputDesc}
+        ]
+
         return(
             <div className="view">
                 <div className="borderStyle align rightBorder">
@@ -144,7 +150,7 @@ function LeftView(props) {
                         <Button onClick={handleOpenSetting}> Settings</Button>
                     </ButtonGroup>
                 </div>
-                <AddForm open={open} type={"Camera"} handleClose={handleClose} handleSubmit={handleCameraSubmit} field1={{name: "Name", handleInput: handleInputName}} field2={{name: "URL", handleInput: handleInputUrl}} field3={{name: "Description", handleInput: handleInputDesc}} />
+                <AddForm open={open} type={"Camera"} handleClose={handleClose} handleSubmit={handleCameraSubmit} textFields={textFields} />
                 <RemoveDialog open={settingsOpen} handleSubmit={finalDelete} handleClose={handleClose} dialogTitle={"Remove camera objects"} dialogContent={"Select which camera object you want to remove."}/>
             </div>
         );

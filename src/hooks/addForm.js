@@ -9,6 +9,39 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 function AddForm(props) {
 
+    const returnTextFields = function returnTextFields() {
+        let textFields = []
+        for(let i = 0; i < props.textFields.length; i++) {
+            if(i == 0) {
+                textFields.push(
+                    <TextField
+                    autoFocus
+                    required
+                    margin="dense"
+                    id="phone_number"
+                    label={props.textFields[i].name}
+                    type="text"
+                    onChange={props.textFields[i].handleInput}
+                    fullWidth
+                />
+                )
+            } else {
+                textFields.push(
+                    <TextField
+                    required
+                    margin="dense"
+                    id="phone_number"
+                    label={props.textFields[i].name}
+                    type="text"
+                    onChange={props.textFields[i].handleInput}
+                    fullWidth
+                />);
+            }
+                
+        }
+        return textFields;
+    }
+
     return(
         <Dialog open={props.open} onClose={props.handleClose} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">Add a {props.type} object</DialogTitle>
@@ -16,34 +49,7 @@ function AddForm(props) {
             <DialogContentText>
                 Fill the form below to add a new {props.type} object
             </DialogContentText>
-            <TextField
-                autoFocus
-                required
-                margin="dense"
-                id="phone_number"
-                label={props.field1.name}
-                type="text"
-                onChange={props.field1.handleInput}
-                fullWidth
-            />
-            <TextField
-                required
-                margin="dense"
-                id="phone_number"
-                label={props.field2.name}
-                type="text"
-                onChange={props.field2.handleInput}
-                fullWidth
-            />
-            <TextField
-                required
-                margin="dense"
-                id="phone_number"
-                label={props.field3.name}
-                type="text"
-                onChange={props.field3.handleInput}
-                fullWidth
-            />
+            {returnTextFields()}
             </DialogContent>
             <DialogActions>
             <Button onClick={props.handleClose} color="primary">

@@ -12,14 +12,6 @@ const Home = props => {
 
   axios.defaults.headers.common['Authorization'] = `Bearer ${context.authObj.getAccessToken()}`;
 
-  useEffect(() => {
-    axios.get(`http://localhost:5000/vehicles`).then((res) => {
-      console.log(res.data);
-      context.fetchVehicles(res.data);
-      context.setCurrentVehicle(res.data[0]);
-    })
-  }, [])
-
   return(
     <div className="home">
       <LeftView />

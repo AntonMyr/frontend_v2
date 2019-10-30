@@ -69,7 +69,6 @@ function MainView(props) {
                         size="large"
                         aria-label="large contained secondary button group"
                     >
-                    {returnButtonItems()}
                         <Button>Stop</Button>
                         <Button>Reset</Button>
                         <Button>Turn off</Button>
