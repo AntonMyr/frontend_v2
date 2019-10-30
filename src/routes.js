@@ -39,7 +39,7 @@ const Routes = () => {
               }} />
               
               <Route path='/authcheck' component={AuthCheck} />
-              <PrivateRoute exat auth={context.authState§} path='/notifications' component={Notifications} />
+              <PrivateRoute exat auth={context.authState} path='/notifications' component={Notifications} />
              
               <Route path='/callback' render={(props) => {
                 context.handleAuth(props); return <Home />
