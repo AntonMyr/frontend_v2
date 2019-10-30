@@ -24,7 +24,9 @@ const PrivateRoute = ({component: Component, auth }) => (
 const Routes = () => {
     const context = useContext(Context)
 
+    console.log(`https://${process.env.REACT_APP_DOMAIN}/v2/logout`)
 
+    
     // Make so path / is either home screen or login screen
     // Might have to add auth0 lock instead somehow
       return(

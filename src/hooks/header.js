@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import Context from '../utils/context';
 
 /* const Header = () => {
@@ -46,6 +47,7 @@ const useStyles = makeStyles({
 
 function Header() {
   const classes = useStyles();
+  const context = useContext(Context);
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -66,6 +68,7 @@ function Header() {
       >
         <Tab label="Main view" component={Link} to="/"/>
         <Tab label="Notification settings" component={Link} to="/notifications" />
+        {/* <Tab label="Logout" onClick={() => axios.get(`https://godseye.eu.auth0.com/v2/logout`)} component={Link} to="/"/> */}
       </Tabs>
     </Paper>
   );

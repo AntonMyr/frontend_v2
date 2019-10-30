@@ -17,7 +17,7 @@ const AuthCheck = () => {
     else {
       context.handleUserLogout()
       context.handleUserRemoveProfile()
-      history.replace('/')
+      console.log("This happened")
       }
     }, [])
 

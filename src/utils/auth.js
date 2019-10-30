@@ -1,6 +1,7 @@
 
 import auth0 from 'auth0-js'
 import history from './history';
+import axios from 'axios';
 
 export default class Auth {
   auth0 = new auth0.WebAuth({
@@ -15,6 +16,7 @@ export default class Auth {
   userProfile = {}
 
   login = () => {
+    console.log("Localstorage:", localStorage)
       this.auth0.authorize()
   }
 
@@ -49,7 +51,6 @@ export default class Auth {
 
   getProfile = () => {
     let accessToken = this.getAccessToken()
-    console.log("WHY isn't this logging?");
     if(accessToken) {
       this.auth0.client.userInfo(accessToken, (err, profile) => {
           if(profile) {
@@ -61,10 +62,12 @@ export default class Auth {
 
 
   logout = () => {
+    console.log("Logout:", localStorage)
     localStorage.removeItem('access_token')
     localStorage.removeItem('id_token')
     localStorage.removeItem('expiresAt')
-    setTimeout(() => { history.replace('/authcheck') }, 200);
+    axios.get(`https://godseye.eu.auth0.com/v2/logout`)
+    setTimeout(() => { history.replace(`/authcheck`) }, 200);
   }
 
   isAuthenticated = () => {
